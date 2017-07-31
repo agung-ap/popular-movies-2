@@ -21,7 +21,6 @@ import id.developer.agungaprian.popularmovie.models.Movie;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder>{
     private List<Movie> data;
-    private int rowLayout;
     private Context context;
 
 

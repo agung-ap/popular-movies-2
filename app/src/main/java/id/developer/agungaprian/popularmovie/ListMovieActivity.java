@@ -3,6 +3,7 @@ package id.developer.agungaprian.popularmovie;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
@@ -19,7 +20,7 @@ import retrofit2.Response;
 
 public class ListMovieActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
-
+    private MovieAdapter adapter;
     private RecyclerView recyclerView;
 
     @Override
@@ -28,7 +29,10 @@ public class ListMovieActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list_movie);
 
         recyclerView = (RecyclerView)findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new GridLayoutManager(this,2));
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(),2,
+                LinearLayoutManager.VERTICAL,false);
+        recyclerView.setLayoutManager(gridLayoutManager);
+
 
         ApiInterface apiInterface =
                 ApiClient.getClient().create(ApiInterface.class);
@@ -40,7 +44,8 @@ public class ListMovieActivity extends AppCompatActivity {
                 List<Movie> movies = response.body().getResults();
                 Log.d(TAG, "number of movie received :" +movies.size());
 
-                recyclerView.setAdapter(new MovieAdapter(movies,getApplicationContext()));
+                adapter = new MovieAdapter(movies, getApplicationContext());
+                recyclerView.setAdapter(adapter);
             }
 
             @Override
