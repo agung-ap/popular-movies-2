@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -20,7 +19,7 @@ import id.developer.agungaprian.popularmovie.models.Movie;
  * Created by agungaprian on 29/07/17.
  */
 
-public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder>{
     private List<Movie> data;
     private int rowLayout;
     private Context context;
@@ -34,20 +33,17 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        RecyclerView.ViewHolder viewHolder;
+    public MovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
 
         view = LayoutInflater.from(parent.getContext()).inflate(
-                R.layout.grid_image, parent, false
-        );
+                R.layout.grid_image, parent, false);
 
-        viewHolder = new MovieViewHolder(view);
-        return viewHolder;
+        return new MovieViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(MovieViewHolder holder, int position) {
         //image url
         String imageUrl = BuildConfig.IMAGE_URL+"/w342"+
                 data.get(position).getPoster_path() +
@@ -56,18 +52,7 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         //load image to image view
         Picasso.with(context)
                 .load(imageUrl)
-                .into(((MovieViewHolder) holder)
-                        .imageView, new Callback() {
-            @Override
-            public void onSuccess() {
-
-            }
-
-            @Override
-            public void onError() {
-
-            }
-        });
+                .into(holder.imageView);
     }
 
     @Override

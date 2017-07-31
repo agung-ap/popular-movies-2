@@ -33,7 +33,7 @@ public class ListMovieActivity extends AppCompatActivity {
         ApiInterface apiInterface =
                 ApiClient.getClient().create(ApiInterface.class);
 
-        Call<MovieResponse> call = apiInterface.loadMovies("popular",BuildConfig.API_KEY);
+        Call<MovieResponse> call = apiInterface.loadMovies("top_rated",BuildConfig.API_KEY);
         call.enqueue(new Callback<MovieResponse>() {
             @Override
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
